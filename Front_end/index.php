@@ -1,32 +1,53 @@
 <?php
-include'connection.php';
-if(isset($_POST['login'])){
-    $email=$_POST['email'];
-    $password=$_POST['password'];
-    $s="select * from users where Email='$email' and Password='$password'";
-    $q=mysqli_query($conn,$s);
-    if(mysqli_num_rows($q)>0){
-        while($row=mysqli_fetch_assoc($q)){
-         $email=$row['Email'];
-         $password=$row['Password'];
-         $name=$row['Name'];
-         session_start();
-         $_SESSION['Email']=$email;
-         $_SESSION['Name']=$name;
+include 'connection.php';
+if (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $s = "select * from users where Email='$email' and Password='$password'";
+    $q = mysqli_query($conn, $s);
+    if (mysqli_num_rows($q) > 0) {
+        while ($row = mysqli_fetch_assoc($q)) {
+            $email = $row['Email'];
+            $password = $row['Password'];
+            $name = $row['FullName'];
+            $role = $row['Role'];
+            session_start();
+            $_SESSION['Email'] = $email;
+            $_SESSION['FullName'] = $name;
+
+            // Redirect based on role
+            if ($role == "admin") {
+                echo "<script>
+                        alert('Welcome Admin');
+                        window.location.href = 'home.php';
+                      </script>";
+            } else if ($role == "manager") {
+                echo "<script>
+                        alert('Welcome Manager');
+                        window.location.href = 'product.php';
+                      </script>";
+            } else if ($role == "Store-Keeper") {
+                echo "<script>
+                        alert('Welcome Store-Keeper');
+                        window.location.href = 'company.php';
+                      </script>";
+            } else if ($role == "Supplier") {
+                echo "<script>
+                        alert('Welcome Supplier');
+                        window.location.href = 'viewProduct.php';
+                      </script>";
+            }
         }
+    } else {
+        // Invalid email or password
         echo "<script>
-                alert('Welcome ');
-                window.location.href = 'home.php';
-            </script>";
-    }
-   
-        echo "<script>
-                alert('you have n't account, Create Account ');
+                alert('You don\'t have an account, Create Account');
                 window.location.href = 'register.php';
-            </script>";
-    
+              </script>";
+    }
 }
-    ?>
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

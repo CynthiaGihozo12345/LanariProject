@@ -19,7 +19,7 @@ else{
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>sales</title>
     <link rel="stylesheet" href="index.css">
     <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -60,20 +60,22 @@ else{
         </center>
     </div>
     <div class="left">
-    <a href="product.php" class="btn btn-primary">Add Product</a><br>
+    <a href="sales.php" class="btn btn-primary">Add sales</a><br>
         <h2>Added Products</h2>
     <table border="1">
         <tr>
             <th>Product_id</th>
-            <th>Product_Name</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Price</th>
+            <th>Company_id</th>
+            <th>Branch_id</th>
+            <th>Quantity</th>
+            <th>Unit_Price</th>
+            <th>Total_Amount</th>
+            <th>Status</th>
             <th>Created_At</th>
             <th colspan="2">Action</th>
             <?php
 require"connection.php";
-$s="select * from Products";
+$s="select * from sales";
 $q=mysqli_query($conn,$s);
 if(mysqli_num_rows($q)>0){
     while($row=mysqli_fetch_assoc($q)){
@@ -81,11 +83,13 @@ if(mysqli_num_rows($q)>0){
         </tr>
         <tr>
         <td><?php echo $row['Product_Id'] ?></td>
-        <td><?php echo $row['Name'] ?></td>
-        <td><?php echo $row['Description'] ?></td>
-        <td><?php echo $row['Category'] ?></td>
-        <td><?php echo $row['Price'] ?></td>
-        <td><?php echo $row['Created_at'] ?></td>
+        <td><?php echo $row['Company_Id'] ?></td>
+        <td><?php echo $row['Branch_id'] ?></td>
+        <td><?php echo $row['Quantity'] ?></td>
+        <td><?php echo $row['Unit_Price'] ?></td>
+        <td><?php echo $row['TotalAmount'] ?></td>
+        <td><?php echo $row['Status'] ?></td>
+        <td><?php echo $row['Created-at'] ?></td>
         <td>
             <a href="#" class="btn btn-warning">Delete</a>&nbsp;
             <a href="#" class="btn btn-success">Update</a>

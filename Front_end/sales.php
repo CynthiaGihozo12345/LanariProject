@@ -17,13 +17,17 @@ else{
 <?php
 require"connection.php";
 if(isset($_POST['add'])){
-    $name=$_POST['name'];
-    $contact=$_POST['contact'];
-    $address=$_POST['address'];
-    $insert="insert into Customer(FullName,Contact_Info,Address)VALUES('$name','$contact','$address')";
+    $product=$_POST['product'];
+    $company=$_POST['company'];
+    $branch=$_POST['branch'];
+    $quantity=$_POST['quantity'];
+    $price=$_POST['price'];
+    $status=$_POST['status'];
+    $total=$quantity*$price;
+    $insert="insert into sales(Product_Id,Company_Id,Branch_Id,Quantity,Unit_Price,TotalAmount,Status)VALUES('$product','$company','$branch','$quantity','$price','$total','$status')";
     $q=mysqli_query($conn,$insert);
     if($q){
-        header("location:viewCustomer.php");
+        header("location:viewSales.php");
     }
 }
 ?>
@@ -33,7 +37,7 @@ if(isset($_POST['add'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>product</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet"  type="text/css" href="index.css">
     <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -43,7 +47,7 @@ if(isset($_POST['add'])){
 </head>
 <body>
    <div>
-    
+   
     <div class="body">
     <div class="nav">
     <ul>
@@ -75,14 +79,55 @@ if(isset($_POST['add'])){
     <div class="left">
     <form action="#" method="POST">
 
-    <a href="viewCustomer.php" class="btn btn-primary">View Customer</a><br><br>
+    <a href="viewSales.php" class="btn btn-primary">View Sales</a><br><br>
             <div class="container">
-            <H2>Fill Customer Information</H2>
-            <input type="text" name="name" placeholder="Enter Customer Name" class="form-control" required><br><br>
-            <input type="text" name="contact" placeholder="Enter Contact_Info" class="form-control" required><br><br>
-            <input type="text" name="address" placeholder="Enter Address" class="form-control" required><br><br>
+            <H2>Fill Sales Information</H2>
+            <select name="product" id="" class="form-control">
+          <option value="">Select Product name</option>
+          <?php
+          $s="select * from products";
+          $q=mysqli_query($conn,$s);
+          while($row=mysqli_fetch_assoc(($q))){
+          ?>
+          <option value="<?php echo $row['Product_Id']?>">
+            <?php echo $row['Name']?>
+          </option>
+          <?php } ?>
+        </select><br>
+        <select name="company" id="" class="form-control">
+          <option value="">Select company name</option>
+          <?php
+          $s="select * from Company";
+          $q=mysqli_query($conn,$s);
+          while($row=mysqli_fetch_assoc(($q))){
+          ?>
+          <option value="<?php echo $row['Company_Id']?>">
+            <?php echo $row['Name']?>
+          </option>
+          <?php } ?>
+        </select><br>
+        <select name="branch" id="" class="form-control">
+          <option value="">Select Branch Name</option>
+          <?php
+          $s="select * from branches";
+          $q=mysqli_query($conn,$s);
+          while($row=mysqli_fetch_assoc(($q))){
+          ?>
+          <option value="<?php echo $row['Branch_id']?>">
+            <?php echo $row['Name']?>
+          </option>
+          <?php } ?>
+        </select><br>
+           
+            <input type="number" name="quantity" placeholder="Enter Quantity" class="form-control" required><br>
+            <input type="number" name="price" placeholder="Enter Price" class="form-control" required><br>
+            <select name="status" id="" class="form-control">
+          <option>Choose Status</option>
+          <option> payed</option>
+          <option> Not payed</option>
+        </select ><br>
+            <input type="submit" name="add" value="Record Sales" class="btn btn-primary">
 
-            <input type="submit" name="add" value="Add Customer" class="btn btn-primary">
             </div>
         
     </form>

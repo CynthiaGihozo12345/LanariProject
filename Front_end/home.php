@@ -1,3 +1,19 @@
+<?php
+session_start();
+if(isset($_SESSION['FullName'])){
+  $name=$_SESSION['FullName'];
+  
+}
+else{
+    echo"
+    <script>
+    alert('please login first ');
+    window.location.href='index.php';
+    </script>
+     
+    ";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,9 +61,13 @@
     <div class="header">
         <center>
             <br>
-            <h2>Welcome to Stock and Sales Management
+            <h2>Welcome to Stock and Sales Management @
+                <?php
+                echo $name;
+                ?>
                
             </h2>
+            <a href="logout.php" style="float: right;margin-top:-40px;color:white;">Logout</a>
         </center>
     </div>
     <div class="left">

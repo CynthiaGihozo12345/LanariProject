@@ -1,4 +1,20 @@
 <?php
+session_start();
+if(isset($_SESSION['FullName'])){
+  $name=$_SESSION['FullName'];
+  
+}
+else{
+    echo"
+    <script>
+    alert('please login first ');
+    window.location.href='index.php';
+    </script>
+     
+    ";
+}
+?>
+<?php
 require"connection.php";
 if(isset($_POST['add'])){
     $company=$_POST['company'];
@@ -48,7 +64,13 @@ if(isset($_POST['add'])){
     <div class="header">
         <center>
             <br>
-            <h2>Welcome to Stock and Sales Management</h2>
+            <h2>Welcome to Stock and Sales Management @
+                <?php
+                echo $name;
+                ?>
+               
+            </h2>
+            <a href="logout.php" style="float: right;margin-top:-40px;color:white;">Logout</a>
         </center>
     </div>
     <div class="left">
